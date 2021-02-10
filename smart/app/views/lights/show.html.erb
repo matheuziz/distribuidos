@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Brightness:</strong>
+  <%= @light.brightness %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @light.color %>
+</p>
+
+<%= link_to 'Edit', edit_light_path(@light) %> |
+<%= link_to 'Back', lights_path %>

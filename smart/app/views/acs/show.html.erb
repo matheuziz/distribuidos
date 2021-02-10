@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Temperature:</strong>
+  <%= @ac.temperature %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= @ac.mode %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @ac.status %>
+</p>
+
+<%= link_to 'Edit', edit_ac_path(@ac) %> |
+<%= link_to 'Back', acs_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  channel: 1
+  volume: 1
+  status: false
+
+two:
+  channel: 1
+  volume: 1
+  status: false

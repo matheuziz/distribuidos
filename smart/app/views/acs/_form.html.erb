@@ -1,0 +1,32 @@
+<%= form_with(model: ac) do |form| %>
+  <% if ac.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ac.errors.count, "error") %> prohibited this ac from being saved:</h2>
+
+      <ul>
+        <% ac.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :temperature %>
+    <%= form.number_field :temperature %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mode %>
+    <%= form.text_field :mode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.check_box :status %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

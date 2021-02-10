@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Channel:</strong>
+  <%= @tv.channel %>
+</p>
+
+<p>
+  <strong>Volume:</strong>
+  <%= @tv.volume %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @tv.status %>
+</p>
+
+<%= link_to 'Edit', edit_tv_path(@tv) %> |
+<%= link_to 'Back', tvs_path %>

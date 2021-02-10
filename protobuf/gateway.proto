@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message TvUpdate {
+  string name   = 1;
+  int32 volume  = 2;
+  int32 channel = 3;
+  bool status   = 4;
+}
+
+message AcUpdate {
+  string name        = 1;
+  int32 temperature  = 2;
+  enum Mode {
+    AUTO = 0;
+    COOL = 1;
+    DRY  = 2;
+    FAN  = 3;
+    HEAT = 4;
+  }
+  Mode mode          = 3;
+  bool status        = 4;
+}
+
+message LightUpdate {
+  string name         = 1;
+  int32  brightness   = 2;
+  string color        = 3;
+}

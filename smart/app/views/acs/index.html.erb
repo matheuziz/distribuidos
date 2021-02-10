@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Acs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Temperature</th>
+      <th>Mode</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @acs.each do |ac| %>
+      <tr>
+        <td><%= ac.temperature %></td>
+        <td><%= ac.mode %></td>
+        <td><%= ac.status %></td>
+        <td><%= link_to 'Show', ac %></td>
+        <td><%= link_to 'Edit', edit_ac_path(ac) %></td>
+        <td><%= link_to 'Destroy', ac, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ac', new_ac_path %>

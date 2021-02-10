@@ -1,0 +1,27 @@
+<%= form_with(model: light) do |form| %>
+  <% if light.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(light.errors.count, "error") %> prohibited this light from being saved:</h2>
+
+      <ul>
+        <% light.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :brightness %>
+    <%= form.number_field :brightness %>
+  </div>
+
+  <div class="field">
+    <%= form.label :color %>
+    <%= form.text_field :color %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
