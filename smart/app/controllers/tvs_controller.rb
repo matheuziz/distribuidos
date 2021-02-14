@@ -36,15 +36,10 @@ class TvsController < ApplicationController
 
   # PATCH/PUT /tvs/1 or /tvs/1.json
   def update
-    respond_to do |format|
-      if @tv.update(tv_params)
-        format.html { redirect_to @tv, notice: "Tv was successfully updated." }
-        format.json { render :show, status: :ok, location: @tv }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tv.errors, status: :unprocessable_entity }
-      end
-    end
+    message = Request.encode(Request.new(tv_update: @tv.to_protobuf))
+    ::GATEWAY.puts(message.size)
+    ::GATEWAY.write(message)
+    redirect_to root_path, notice: "Sent update to #{@tv.name}"
   end
 
   # DELETE /tvs/1 or /tvs/1.json

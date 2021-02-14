@@ -36,15 +36,11 @@ class AcsController < ApplicationController
 
   # PATCH/PUT /acs/1 or /acs/1.json
   def update
-    respond_to do |format|
-      if @ac.update(ac_params)
-        format.html { redirect_to @ac, notice: "Ac was successfully updated." }
-        format.json { render :show, status: :ok, location: @ac }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ac.errors, status: :unprocessable_entity }
-      end
-    end
+    @ac.assign_attributes(ac_params)
+    message = Request.encode(Request.new(ac_update: @ac.to_protobuf))
+    ::GATEWAY.puts(message.size)
+    ::GATEWAY.write(message)
+    redirect_to root_path, notice: "Sent update to #{@ac.name}"
   end
 
   # DELETE /acs/1 or /acs/1.json

@@ -1,0 +1,12 @@
+GEM
+  specs:
+    google-protobuf (3.14.0-universal-darwin)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  google-protobuf
+
+BUNDLED WITH
+   2.1.4

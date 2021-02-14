@@ -26,3 +26,11 @@ message LightUpdate {
   int32  brightness   = 2;
   string color        = 3;
 }
+
+message Request {
+  oneof update {
+    TvUpdate tv_update = 1;
+    AcUpdate ac_update = 2;
+    LightUpdate light_update = 3;
+  }
+}

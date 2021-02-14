@@ -36,15 +36,10 @@ class LightsController < ApplicationController
 
   # PATCH/PUT /lights/1 or /lights/1.json
   def update
-    respond_to do |format|
-      if @light.update(light_params)
-        format.html { redirect_to @light, notice: "Light was successfully updated." }
-        format.json { render :show, status: :ok, location: @light }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @light.errors, status: :unprocessable_entity }
-      end
-    end
+    message = Request.encode(Request.new(light_update: @light.to_protobuf))
+    ::GATEWAY.puts(message.size)
+    ::GATEWAY.write(message)
+    redirect_to root_path, notice: "Sent update to #{@light.name}"
   end
 
   # DELETE /lights/1 or /lights/1.json
