@@ -18,16 +18,20 @@ WEBSERVER = TCPSocket.new(CONFIG[:INTERFACE_HOST], CONFIG[:INTERFACE_PORT])
 ACTIVE_CLIENTS = Hash.new
 DEVICES = Hash.new
 
-Thread.new do
+def debug(msg)
+  CONFIG[:LOGGER].puts("DEBUG -- " + msg.to_s)
+end
+
+@reciever = Thread.new do
   loop do
     size = WEBSERVER.gets.to_i
     message = WEBSERVER.read(size)
-    CONFIG[:LOGGER].puts("RECIEVED MESSAGE OF SIZE: #{size}")
-    CONFIG[:LOGGER].puts(message.inspect)
+    debug("RECIEVED MESSAGE OF SIZE: #{size}")
+    debug(message.inspect)
     req = Request.decode(message)
     update = req.send(req.update)
     json = update.to_h.to_json
-    CONFIG[:LOGGER].puts("RELAYING TO: #{update.name}: #{json}")
+    debug("RELAYING TO: #{update.name}: #{json}")
     DEVICES[update.name].puts(json)
   end
 end
@@ -41,7 +45,7 @@ def hash_to_protobuf(hash)
     {ac_update: AcUpdate.new(keys)}
   when 'TV'
     {tv_update: TvUpdate.new(keys)}
-  when 'LED'
+  when 'LIGHT'
     {light_update: LightUpdate.new(keys)}
   end
 end
@@ -71,7 +75,12 @@ ensure
 end
 
 # Main server loop
-loop do
-  client_sock = SERVER.accept
-  Thread.new { handle(client_sock) }
+begin
+  loop do
+    client_sock = SERVER.accept
+    Thread.new { handle(client_sock) }
+  end
+ensure
+  WEBSERVER.close
+  SERVER.close
 end

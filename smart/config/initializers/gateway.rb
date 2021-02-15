@@ -1,10 +1,3 @@
-@s = TCPServer.new(4445)
-puts("Waiting for gateway...")
-GATEWAY = @s.accept
-
-Ac.delete_all
-Tv.delete_all
-Light.delete_all
 
 def handle(request)
   return unless request
@@ -18,12 +11,37 @@ def handle(request)
     ac.status = update.status
     ac.temperature = update.temperature
     ac.save if ac.changed.any?
+
   when :tv_update
+    tv = Tv.find_or_initialize_by(name: update.name)
+    tv.name = update.name
+    tv.channel = update.channel
+    tv.status = update.status
+    tv.volume = update.volume
+    tv.save if tv.changed.any?
+
   when :light_update
+    tv = Light.find_or_initialize_by(name: update.name)
+    tv.name = update.name
+    tv.channel = update.channel
+    tv.status = update.status
+    tv.volume = update.volume
+    tv.save if tv.changed.any?
   end
 end
 
-Thread.new do
+
+@server = TCPServer.new(4445)
+puts("Waiting for gateway...")
+GATEWAY = @server.accept
+
+ApplicationRecord.transaction do
+  Ac.delete_all
+  Tv.delete_all
+  Light.delete_all
+end
+
+@listener = Thread.new do
   begin
     loop do
       size = GATEWAY.gets.to_i
@@ -32,6 +50,6 @@ Thread.new do
       handle(req)
     end
   ensure
-    @s.close
+    @server.close
   end
 end
