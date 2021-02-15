@@ -48,7 +48,7 @@ end
     message = GATEWAY.gets
     STDOUT.puts("RECIEVED UPDATE: #{message}")
     json = JSON.parse(message)
-    state = json.transform_keys(&:to_sym).merge(type: 'AC')
+    state = json.transform_keys(&:to_sym).merge(type: state['type'])
   end
 end
 
